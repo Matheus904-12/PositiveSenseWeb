@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ========================================
  * PROCESSAMENTO DE REGISTRO
@@ -12,7 +13,8 @@ require_once __DIR__ . '/config/database.php';
 header('Content-Type: application/json; charset=utf-8');
 
 // Função para registrar log
-function registrarLog($usuario_id, $acao, $detalhes = null) {
+function registrarLog($usuario_id, $acao, $detalhes = null)
+{
     try {
         $db = getDB();
         $stmt = $db->prepare("
@@ -26,7 +28,7 @@ function registrarLog($usuario_id, $acao, $detalhes = null) {
             $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
             $detalhes
         ]);
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         error_log("Erro ao registrar log: " . $e->getMessage());
     }
 }
@@ -127,15 +129,31 @@ try {
     ]);
 
     // Define cookie de sessão (30 dias)
-    setcookie('sessao_token', $token, time() + (30 * 24 * 60 * 60), '/', '', false, true);
+    // Detecta ambiente Vercel para cookies seguros
+    $isVercel = (
+        isset($_ENV['VERCEL']) ||
+        isset($_SERVER['VERCEL']) ||
+        isset($_ENV['VERCEL_ENV']) ||
+        strpos($_SERVER['HTTP_HOST'] ?? '', 'vercel.app') !== false
+    );
+
+    $cookieOptions = [
+        'expires' => time() + (30 * 24 * 60 * 60),
+        'path' => '/',
+        'domain' => '',
+        'secure' => $isVercel, // HTTPS no Vercel
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ];
+
+    setcookie('sessao_token', $token, $cookieOptions);
 
     echo json_encode([
         'success' => true,
         'message' => 'Cadastro realizado com sucesso! Redirecionando para seu perfil...',
         'redirect' => 'perfil.php?novo=1'
     ]);
-
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     error_log("Erro no registro: " . $e->getMessage());
 
     // Mensagem mais específica para debug
@@ -159,7 +177,7 @@ try {
         'message' => $mensagem,
         'error_details' => $e->getMessage() // Para debug
     ]);
-} catch(Exception $e) {
+} catch (Exception $e) {
     error_log("Erro geral no registro: " . $e->getMessage());
     echo json_encode([
         'success' => false,
