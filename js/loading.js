@@ -5,14 +5,14 @@
  * ========================================
  *
  * Controla fade in/out do loading screen
- * Com animações suaves e fluidas
+ * APENAS na navegação de páginas (não em ações AJAX)
  */
 
 class LoadingScreenManager {
     constructor() {
         this.loadingScreen = null;
         this.initialized = false;
-        this.hideDelay = 1000; // Tempo mínimo em tela (1s)
+        this.hideDelay = 800; // Tempo mínimo em tela (reduzido)
         this.init();
     }
 
@@ -25,7 +25,12 @@ class LoadingScreenManager {
         // Cria o elemento do loading screen
         this.createLoadingScreen();
 
-        // Inicia fade out quando página carrega
+        // Mostra loading APENAS no carregamento inicial da página
+        if (document.readyState === 'loading') {
+            this.showLoadingScreen();
+        }
+
+        // Esconde quando página termina de carregar
         window.addEventListener('load', () => {
             this.hideLoadingScreen();
         });
@@ -35,7 +40,39 @@ class LoadingScreenManager {
             this.hideLoadingScreen();
         }, 5000); // 5 segundos máximo
 
+        // IMPORTANTE: Mostra loading APENAS ao clicar em LINKS de navegação
+        // NÃO mostra em botões de formulário, AJAX, ou ações na mesma página
+        this.setupNavigationListener();
+
         this.initialized = true;
+    }
+
+    /**
+     * Configura listener APENAS para navegação entre páginas
+     */
+    setupNavigationListener() {
+        document.addEventListener('click', (e) => {
+            // Verifica se clicou em um link de navegação
+            const link = e.target.closest('a');
+
+            if (!link) return; // Não é um link
+
+            const href = link.getAttribute('href');
+
+            // Ignora links especiais
+            if (!href ||
+                href.startsWith('#') ||            // Âncoras na mesma página
+                href.startsWith('javascript:') ||  // JavaScript
+                href.includes('logout') ||         // Logout
+                link.hasAttribute('download') ||   // Downloads
+                link.target === '_blank'           // Abrir em nova aba
+            ) {
+                return;
+            }
+
+            // Se chegou aqui, é navegação real para outra página
+            this.showLoadingScreen();
+        }, true);
     }
 
     /**
@@ -48,7 +85,7 @@ class LoadingScreenManager {
         }
 
         const html = `
-            <div id="loading-screen">
+            <div id="loading-screen" class="hidden">
                 <div class="loading-content">
                     <div class="loading-mascote">
                         <img src="img/teladecarregamento.gif?v=${Date.now()}" alt="Carregando PositiveSense" class="mascote-gif">
@@ -86,23 +123,26 @@ class LoadingScreenManager {
 
         setTimeout(() => {
             this.loadingScreen.classList.add('fade-out');
+            this.loadingScreen.classList.add('hidden');
 
             // Remove do DOM após a animação
             setTimeout(() => {
                 if (this.loadingScreen && this.loadingScreen.parentNode) {
-                    this.loadingScreen.parentNode.removeChild(this.loadingScreen);
+                    this.loadingScreen.style.display = 'none';
                 }
             }, 800); // Tempo da animação fade-out
         }, this.hideDelay);
     }
 
     /**
-     * Mostra novamente o loading screen
+     * Mostra novamente o loading screen (apenas navegação)
      */
     showLoadingScreen() {
-        if (this.loadingScreen) {
-            this.loadingScreen.classList.remove('fade-out');
-        }
+        if (!this.loadingScreen) return;
+
+        this.loadingScreen.style.display = 'flex';
+        this.loadingScreen.classList.remove('fade-out');
+        this.loadingScreen.classList.remove('hidden');
     }
 }
 
