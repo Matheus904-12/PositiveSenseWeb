@@ -6,16 +6,16 @@
  * ========================================
  */
 
-session_start();
+// Carrega sistema de sessão (inclui session_start e restauração via cookie)
+require_once __DIR__ . '/config/session.php';
+require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/partials.php';
 
 // Verifica se usuário está logado
-if (!isset($_SESSION['usuario_id'])) {
+if (!estaLogado()) {
     header('Location: login.php');
     exit;
 }
-
-require_once __DIR__ . '/config/database.php';
-require_once __DIR__ . '/partials.php';
 
 // Itens de navegação (padronizados)
 $nav_items = [
