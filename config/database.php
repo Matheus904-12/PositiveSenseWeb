@@ -30,7 +30,7 @@ if ($isVercel) {
     // ========================================
     // AMBIENTE VERCEL (TiDB Cloud)
     // ========================================
-    define('DB_HOST', getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? 'gateway01us-east-1.prod.aws.tidbcloud.com'));
+    define('DB_HOST', getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? 'gateway01.us-east-1.prod.aws.tidbcloud.com'));
     define('DB_PORT', getenv('DB_PORT') ?: ($_ENV['DB_PORT'] ?? '4000'));
     define('DB_NAME', getenv('DB_NAME') ?: ($_ENV['DB_NAME'] ?? 'positivesense'));
     define('DB_USER', getenv('DB_USER') ?: ($_ENV['DB_USER'] ?? ''));
