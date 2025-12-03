@@ -1,15 +1,16 @@
 <?php
+
 /**
  * ========================================
  * PROCESSAR ATUALIZAÇÃO DE PERFIL
  * ========================================
  */
 
-session_start();
+require_once __DIR__ . '/config/session.php';
 header('Content-Type: application/json');
 
 // Verifica se está logado
-if (!isset($_SESSION['usuario_id'])) {
+if (!estaLogado()) {
     echo json_encode(['sucesso' => false, 'mensagem' => 'Sessão expirada. Faça login novamente.']);
     exit;
 }
@@ -67,7 +68,6 @@ try {
         'sucesso' => true,
         'mensagem' => 'Dados atualizados com sucesso!'
     ]);
-
 } catch (Exception $e) {
     echo json_encode([
         'sucesso' => false,
