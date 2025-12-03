@@ -1,9 +1,10 @@
 <?php
+
 /**
  * ========================================
  * CRIAR TABELA SESSOES NO TIDB CLOUD
  * ========================================
- * 
+ *
  * Execute este arquivo UMA VEZ para criar a tabela sessoes
  */
 
@@ -35,7 +36,7 @@ try {
     echo "<p>Host: " . DB_HOST . "</p>";
     echo "<p>Ambiente: " . DB_ENV . "</p>";
     echo "<hr>";
-    
+
     // Verifica se a tabela já existe
     echo "<h2>1️⃣ Verificando se tabela 'sessoes' existe...</h2>";
     try {
@@ -46,7 +47,7 @@ try {
     } catch (PDOException $e) {
         echo "<p class='error'>❌ Tabela 'sessoes' NÃO EXISTE. Criando agora...</p>";
         echo "<hr>";
-        
+
         // SQL para criar a tabela
         $sql = "
 CREATE TABLE sessoes (
@@ -62,15 +63,15 @@ CREATE TABLE sessoes (
     INDEX idx_data_expiracao (data_expiracao),
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-        
+
         echo "<h2>2️⃣ Executando SQL...</h2>";
         echo "<pre>" . htmlspecialchars($sql) . "</pre>";
-        
+
         $db->exec($sql);
-        
+
         echo "<p class='success'>✅ Tabela 'sessoes' criada com SUCESSO!</p>";
         echo "<hr>";
-        
+
         // Verifica a estrutura da tabela criada
         echo "<h2>3️⃣ Estrutura da Tabela 'sessoes':</h2>";
         $stmt = $db->query("DESCRIBE sessoes");
@@ -78,15 +79,15 @@ CREATE TABLE sessoes (
         echo str_pad("Campo", 20) . str_pad("Tipo", 25) . str_pad("Nulo", 10) . str_pad("Chave", 10) . "Padrão\n";
         echo str_repeat("-", 80) . "\n";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo str_pad($row['Field'], 20) . 
-                 str_pad($row['Type'], 25) . 
-                 str_pad($row['Null'], 10) . 
-                 str_pad($row['Key'], 10) . 
-                 ($row['Default'] ?? 'NULL') . "\n";
+            echo str_pad($row['Field'], 20) .
+                str_pad($row['Type'], 25) .
+                str_pad($row['Null'], 10) .
+                str_pad($row['Key'], 10) .
+                ($row['Default'] ?? 'NULL') . "\n";
         }
         echo "</pre>";
     }
-    
+
     echo "<hr>";
     echo "<h2>✅ PRONTO! Tabela 'sessoes' está disponível!</h2>";
     echo "<p>Agora você pode:</p>";
@@ -95,7 +96,6 @@ CREATE TABLE sessoes (
     echo "<li><a href='login.php' style='color: #4ec9b0;'>🚀 Fazer Login normal</a></li>";
     echo "<li><a href='verificar_banco.php' style='color: #4ec9b0;'>📊 Verificar Banco de Dados</a></li>";
     echo "</ul>";
-    
 } catch (PDOException $e) {
     echo "<p class='error'>❌ ERRO ao conectar ou criar tabela:</p>";
     echo "<pre>" . htmlspecialchars($e->getMessage()) . "</pre>";
@@ -103,4 +103,3 @@ CREATE TABLE sessoes (
 }
 
 echo "</body></html>";
-?>

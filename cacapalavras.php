@@ -472,42 +472,57 @@ require_once __DIR__ . '/partials.php';
                 height: 50px;
             }
 
+            .game-container {
+                padding: 10px;
+                margin: 10px;
+            }
+
             .grid-cell {
-                width: 28px;
-                height: 28px;
-                font-size: 14px;
-                border-radius: 5px;
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+                border-radius: 4px;
+            }
+
+            .word-search-grid {
+                gap: 2px;
+                max-width: 100%;
+                overflow-x: auto;
+                padding: 5px;
             }
 
             .game-title {
-                font-size: 24px;
+                font-size: 20px;
+                padding: 0 10px;
             }
 
             .game-title i {
-                margin-right: 8px;
+                margin-right: 6px;
+                font-size: 18px;
             }
 
             .game-subtitle {
-                font-size: 14px;
+                font-size: 13px;
+                padding: 0 10px;
             }
 
             .puzzle-container {
-                padding: 15px;
+                padding: 10px;
             }
 
             .words-panel {
-                padding: 15px;
+                padding: 12px;
                 min-width: auto;
             }
 
             .words-title {
-                font-size: 18px;
-                margin-bottom: 15px;
+                font-size: 16px;
+                margin-bottom: 12px;
             }
 
             .word-item {
-                padding: 12px 15px;
-                font-size: 14px;
+                padding: 10px 12px;
+                font-size: 13px;
                 min-width: 100px;
             }
 

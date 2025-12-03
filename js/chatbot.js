@@ -29,10 +29,12 @@ class ChatbotAssistente {
 
                 <div class="chatbot-window" id="chatbotWindow">
                     <div class="chatbot-header">
-                        <div class="chatbot-avatar">🧠</div>
+                        <div class="chatbot-avatar">
+                            <img src="img/mascote.png" alt="Risco" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                        </div>
                         <div class="chatbot-info">
-                            <h3>Assistente TEA</h3>
-                            <p>Tire suas dúvidas sobre autismo</p>
+                            <h3>Tire dúvidas com o Risco</h3>
+                            <p>Seu assistente sobre autismo</p>
                         </div>
                         <div class="chatbot-status">
                             <span class="status-dot"></span>
@@ -260,12 +262,41 @@ class ChatbotAssistente {
     }
   }
 
+  normalizeText(text) {
+    return text
+      .toLowerCase()
+      .trim()
+      // Remove acentos
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      // Corrige erros comuns de digitação
+      .replace(/oque/g, "o que")
+      .replace(/oq/g, "o que")
+      .replace(/pq/g, "porque")
+      .replace(/vc/g, "voce")
+      .replace(/tb/g, "tambem")
+      .replace(/tah/g, "ta")
+      .replace(/eh/g, "e")
+      .replace(/mt/g, "muito")
+      .replace(/nd/g, "nada")
+      .replace(/tbm/g, "tambem")
+      .replace(/cmg/g, "comigo")
+      .replace(/msg/g, "mensagem")
+      .replace(/blz/g, "beleza")
+      // Remove pontuação extra
+      .replace(/[?!.,;]+/g, " ")
+      // Remove espaços múltiplos
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   getPredefinedResponse(question) {
-    const q = question.toLowerCase().trim();
+    // Normaliza a pergunta para tolerar erros de digitação
+    const q = this.normalizeText(question);
 
     // Saudações
     if (
-      q.match(/^(oi|olá|ola|hey|opa|e ai|eai|bom dia|boa tarde|boa noite)$/)
+      q.match(/^(oi|ola|olá|hey|opa|e ai|eai|bom dia|boa tarde|boa noite|ola|oie|oii)$/)
     ) {
       const saudacoes = [
         "Olá! 👋 Como posso ajudá-lo hoje?",
@@ -317,11 +348,10 @@ class ChatbotAssistente {
 
     // O que é TEA - respostas variadas
     if (
-      q.includes("o que é tea") ||
-      q.includes("o que e tea") ||
-      q.includes("o que é autismo") ||
-      q.includes("o que e autismo") ||
-      q.includes("definição de tea")
+      q.match(/(o que|oque|oq).*(tea|autismo|espectro autista)/) ||
+      q.match(/(tea|autismo).*(e|eh|significa|definicao|conceito)/) ||
+      q.includes("explica tea") ||
+      q.includes("explica autismo")
     ) {
       return 'O TEA (Transtorno do Espectro Autista) é uma condição neurológica que afeta o desenvolvimento e a forma como uma pessoa se comunica e interage com outras pessoas. 🧠\n\nÉ chamado de "espectro" porque pode se manifestar de formas muito diferentes e com intensidades variadas em cada pessoa.\n\n✨ Pessoas com TEA podem ter habilidades extraordinárias em áreas específicas e contribuir muito para a sociedade!';
     }

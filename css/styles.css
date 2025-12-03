@@ -447,6 +447,30 @@ nav {
     text-align: center;
 }
 
+/* Correções mobile para menu de usuário */
+@media (max-width: 768px) {
+    .user-menu-btn {
+        padding: 0.25rem;
+        background: transparent !important;
+    }
+
+    .user-menu-btn:hover {
+        background: transparent !important;
+        transform: none;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-width: 2px;
+    }
+
+    .user-dropdown {
+        right: -10px;
+        min-width: 180px;
+    }
+}
+
 /* ==========================================
    HERO SECTION LIGHT
    ========================================== */

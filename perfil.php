@@ -589,36 +589,87 @@ try {
         }
 
         @media (max-width: 768px) {
+            .profile-section {
+                padding: 80px 0.5rem 1rem;
+            }
+
+            .profile-container {
+                padding: 0 0.5rem;
+            }
+
             .welcome-banner {
                 flex-direction: column;
                 text-align: center;
-                padding: 1.5rem;
+                padding: 1.5rem 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .welcome-icon {
+                width: 50px;
+                height: 50px;
             }
 
             .welcome-text h2 {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                margin-bottom: 0.3rem;
             }
 
             .welcome-text p {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
+                line-height: 1.4;
             }
 
             .profile-header {
                 text-align: center;
                 flex-direction: column;
+                padding: 1.5rem 1rem;
+            }
+
+            .profile-avatar {
+                margin-bottom: 1rem;
             }
 
             .profile-stats {
                 justify-content: center;
+                gap: 1rem;
+            }
+
+            .stat {
+                padding: 0.5rem;
+            }
+
+            .stat-number {
+                font-size: 1.2rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
             }
 
             .tabs {
                 flex-wrap: wrap;
+                gap: 0.3rem;
             }
 
             .tab {
                 flex: 1;
-                min-width: 100px;
+                min-width: 90px;
+                font-size: 0.85rem;
+                padding: 0.7rem 0.5rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .game-card {
+                padding: 1rem;
             }
         }
     </style>
