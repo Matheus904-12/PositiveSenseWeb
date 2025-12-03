@@ -1,9 +1,10 @@
 <?php
+
 /**
  * ========================================
  * VERIFICAÇÃO DO BANCO DE DADOS
  * ========================================
- * 
+ *
  * Script para verificar estrutura e dados do banco
  */
 
@@ -13,23 +14,78 @@ header('Content-Type: text/html; charset=utf-8');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Verificação do Banco - PositiveSense</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
-        h1, h2 { color: #333; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background: #4CAF50; color: white; }
-        tr:nth-child(even) { background: #f9f9f9; }
-        .success { color: green; font-weight: bold; }
-        .error { color: red; font-weight: bold; }
-        .info { background: #e3f2fd; padding: 10px; border-radius: 4px; margin: 10px 0; }
-        pre { background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .info {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>🔍 Verificação do Banco de Dados - PositiveSense</h1>
@@ -38,7 +94,7 @@ header('Content-Type: text/html; charset=utf-8');
         try {
             $db = getDB();
             echo "<p class='success'>✅ Conexão com banco estabelecida com sucesso!</p>";
-            
+
             // Informações de conexão
             echo "<div class='info'>";
             echo "<strong>Ambiente:</strong> " . DB_ENV . "<br>";
@@ -52,18 +108,18 @@ header('Content-Type: text/html; charset=utf-8');
             $stmt = $db->query("SELECT COUNT(*) as total FROM usuarios");
             $total = $stmt->fetch()['total'];
             echo "<p>Total de usuários: <strong>$total</strong></p>";
-            
+
             if ($total > 0) {
                 echo "<h3>Últimos 10 usuários cadastrados:</h3>";
                 $stmt = $db->query("
-                    SELECT id, nome, email, tipo_usuario, status, 
+                    SELECT id, nome, email, tipo_usuario, status,
                            DATE_FORMAT(data_cadastro, '%d/%m/%Y %H:%i') as cadastro,
                            DATE_FORMAT(ultimo_acesso, '%d/%m/%Y %H:%i') as ultimo_acesso
-                    FROM usuarios 
-                    ORDER BY id DESC 
+                    FROM usuarios
+                    ORDER BY id DESC
                     LIMIT 10
                 ");
-                
+
                 echo "<table>";
                 echo "<tr><th>ID</th><th>Nome</th><th>Email</th><th>Tipo</th><th>Status</th><th>Cadastro</th><th>Último Acesso</th></tr>";
                 while ($row = $stmt->fetch()) {
@@ -85,10 +141,10 @@ header('Content-Type: text/html; charset=utf-8');
             $stmt = $db->query("SELECT COUNT(*) as total FROM sessoes");
             $total_sessoes = $stmt->fetch()['total'];
             echo "<p>Total de sessões: <strong>$total_sessoes</strong></p>";
-            
+
             $stmt = $db->query("
-                SELECT COUNT(*) as total 
-                FROM sessoes 
+                SELECT COUNT(*) as total
+                FROM sessoes
                 WHERE data_expiracao > NOW()
             ");
             $sessoes_ativas = $stmt->fetch()['total'];
@@ -108,7 +164,7 @@ header('Content-Type: text/html; charset=utf-8');
                     ORDER BY s.data_criacao DESC
                     LIMIT 10
                 ");
-                
+
                 echo "<table>";
                 echo "<tr><th>ID</th><th>Usuário ID</th><th>Nome</th><th>Email</th><th>Criação</th><th>Expiração</th><th>IP</th><th>Token (preview)</th></tr>";
                 while ($row = $stmt->fetch()) {
@@ -143,7 +199,7 @@ header('Content-Type: text/html; charset=utf-8');
                     ORDER BY l.id DESC
                     LIMIT 20
                 ");
-                
+
                 echo "<table>";
                 echo "<tr><th>ID</th><th>Usuário</th><th>Ação</th><th>Data/Hora</th><th>IP</th><th>Detalhes</th></tr>";
                 while ($row = $stmt->fetch()) {
@@ -162,7 +218,7 @@ header('Content-Type: text/html; charset=utf-8');
 
             // Estrutura das tabelas
             echo "<h2>🏗️ Estrutura das Tabelas</h2>";
-            
+
             $tabelas = ['usuarios', 'sessoes', 'logs_acesso'];
             foreach ($tabelas as $tabela) {
                 echo "<h3>Tabela: $tabela</h3>";
@@ -181,7 +237,6 @@ header('Content-Type: text/html; charset=utf-8');
                 }
                 echo "</table>";
             }
-
         } catch (PDOException $e) {
             echo "<p class='error'>❌ Erro ao conectar com banco de dados:</p>";
             echo "<pre>" . htmlspecialchars($e->getMessage()) . "</pre>";
@@ -192,4 +247,5 @@ header('Content-Type: text/html; charset=utf-8');
         <p><a href="debug_sessao.php">🔍 Ver Debug de Sessão</a> | <a href="index.php">🏠 Voltar para Home</a></p>
     </div>
 </body>
+
 </html>
