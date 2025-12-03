@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ========================================
  * LOGOUT
@@ -6,11 +7,11 @@
  * ========================================
  */
 
-session_start();
+require_once __DIR__ . '/config/session.php';
 require_once __DIR__ . '/config/database.php';
 
 // Registra log de logout se usuário estiver logado
-if (isset($_SESSION['usuario_id'])) {
+if (estaLogado()) {
     try {
         $db = getDB();
 
@@ -31,8 +32,7 @@ if (isset($_SESSION['usuario_id'])) {
             $stmt->execute([$_COOKIE['sessao_token']]);
             setcookie('sessao_token', '', time() - 3600, '/');
         }
-
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         error_log("Erro no logout: " . $e->getMessage());
     }
 }
@@ -42,7 +42,7 @@ $_SESSION = array();
 
 // Destrói o cookie de sessão
 if (isset($_COOKIE[session_name()])) {
-    setcookie(session_name(), '', time()-3600, '/');
+    setcookie(session_name(), '', time() - 3600, '/');
 }
 
 // Destrói a sessão
