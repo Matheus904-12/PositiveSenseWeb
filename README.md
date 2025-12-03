@@ -14,26 +14,7 @@ Criar ambientes escolares mais acolhedores e conscientes, promovendo a inclusão
 
 ## 👥 Equipe de Desenvolvimento
 
-### 💻 Desenvolvedores Principais
-
-- **Heloisa Machado** ([@heloisamachado155](https://github.com/heloisamachado155)) - Desenvolvedora Principal & Líder do Projeto
-  - Design da interface
-  - Desenvolvimento front-end
-  - Criação dos jogos educativos
-  - Coordenação do projeto
-
-- **Matheus Lucindo** ([@Matheus904-12](https://github.com/Matheus904-12)) - Suporte Técnico & DevOps
-  - Configuração de infraestrutura
-  - Deploy e hospedagem (Vercel + TiDB Cloud)
-  - Suporte técnico e manutenção
-  - Troubleshooting e debug
-
-### 🤝 Colaboradores
-
-- **Ana Luisa** ([@anallaves](https://github.com/anallaves))
-- **Emanuele Scarpari**
-- **Emanuele Costa**
-- **Ryan Oliveira**
+Projeto desenvolvido por uma equipe dedicada à inclusão escolar e tecnologia assistiva.
 
 ---
 
@@ -138,7 +119,7 @@ https://positive-sense-web.vercel.app/debug_sessao.php
 
 ```bash
 # Clone o repositório
-git clone https://github.com/Matheus904-12/PositiveSenseWeb.git
+git clone https://github.com/PositiveSenseWeb/PositiveSenseWeb.git
 cd PositiveSenseWeb
 
 # Configure o banco de dados
@@ -150,25 +131,16 @@ php -S localhost:8000
 
 ---
 
-## 🤝 Como Adicionar Colaboradores
+## 🤝 Como Contribuir
 
-Para dar acesso aos colaboradores ao repositório:
+Para contribuir com o projeto:
 
-1. **Acesse as Configurações do Repositório**
-   - Vá para: `https://github.com/Matheus904-12/PositiveSenseWeb/settings/access`
-
-2. **Clique em "Add people" (Adicionar pessoas)**
-
-3. **Adicione os colaboradores:**
-   - `@heloisamachado155` (Heloisa Machado) - **Admin** ou **Maintain**
-   - `@anallaves` (Ana Luisa) - **Write** ou **Maintain**
-   - Adicione os demais pelos usernames do GitHub
-
-4. **Defina as permissões:**
-   - **Admin:** Controle total
-   - **Maintain:** Gerenciar sem deletar
-   - **Write:** Criar branches e PRs
-   - **Read:** Apenas visualizar
+1. **Faça um fork do repositório**
+2. **Clone o projeto**
+3. **Crie uma branch para sua feature** (`git checkout -b feature/NovaFuncionalidade`)
+4. **Commit suas mudanças** (`git commit -m 'Adiciona nova funcionalidade'`)
+5. **Push para a branch** (`git push origin feature/NovaFuncionalidade`)
+6. **Abra um Pull Request**
 
 ---
 
