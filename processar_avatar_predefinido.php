@@ -1,15 +1,16 @@
 <?php
+
 /**
  * ========================================
  * PROCESSAR SELEÇÃO DE AVATAR PREDEFINIDO
  * ========================================
  */
 
-session_start();
+require_once __DIR__ . '/config/session.php';
 header('Content-Type: application/json');
 
 // Verifica se está logado
-if (!isset($_SESSION['usuario_id'])) {
+if (!estaLogado()) {
     echo json_encode(['sucesso' => false, 'mensagem' => 'Sessão expirada. Faça login novamente.']);
     exit;
 }
@@ -59,7 +60,6 @@ try {
         'mensagem' => 'Avatar atualizado com sucesso!',
         'foto_url' => $avatar
     ]);
-
 } catch (Exception $e) {
     echo json_encode([
         'sucesso' => false,
