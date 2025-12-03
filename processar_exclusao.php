@@ -1,14 +1,15 @@
 <?php
+
 /**
  * ========================================
  * PROCESSAR EXCLUSÃO DE CONTA
  * ========================================
  */
 
-session_start();
+require_once __DIR__ . '/config/session.php';
 
 // Verifica se está logado
-if (!isset($_SESSION['usuario_id'])) {
+if (!estaLogado()) {
     header('Location: login.php');
     exit;
 }
@@ -56,7 +57,6 @@ try {
     // Redireciona para página inicial
     header('Location: index.php?conta_excluida=1');
     exit;
-
 } catch (Exception $e) {
     // Reverte transação em caso de erro
     if ($pdo->inTransaction()) {
