@@ -7,10 +7,10 @@
  * ========================================
  */
 
-session_start();
+require_once __DIR__ . '/config/session.php';
 require_once __DIR__ . '/config/database.php';
 
-header('Content-Type: application/json; charset=utf-8');
+// IMPORTANTE: Header DEPOIS do session.php para evitar "headers already sent"
 
 // Função para registrar log de acesso
 function registrarLog($usuario_id, $acao, $detalhes = null)
@@ -62,9 +62,13 @@ function criarSessao($usuario_id)
 
 // Verifica se é requisição POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Método não permitido']);
     exit;
 }
+
+// Define header depois das validações iniciais
+header('Content-Type: application/json; charset=utf-8');
 
 // Obtém dados do POST
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
