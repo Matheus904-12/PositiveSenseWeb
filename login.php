@@ -192,7 +192,8 @@ require_once __DIR__ . '/partials.php';
             try {
                 const response = await fetch('processar_login.php', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    credentials: 'include' // IMPORTANTE: Inclui cookies na requisição
                 });
 
                 const data = await response.json();
