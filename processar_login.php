@@ -116,7 +116,7 @@ try {
     $_SESSION['usuario_email'] = $usuario['email'];
     $_SESSION['usuario_tipo'] = $usuario['tipo_usuario'];
     $_SESSION['usuario_foto'] = $usuario['foto_perfil'];
-    
+
     // CRÍTICO: Salva a sessão imediatamente
     session_write_close();
 

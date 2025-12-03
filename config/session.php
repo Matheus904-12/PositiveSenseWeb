@@ -52,7 +52,7 @@ function verificarSessao()
     if (session_status() === PHP_SESSION_NONE) {
         @session_start();
     }
-    
+
     // Se já está logado, não precisa verificar token
     if (isset($_SESSION['usuario_id'])) {
         error_log("Sessão já existe - Usuario ID: {$_SESSION['usuario_id']}");

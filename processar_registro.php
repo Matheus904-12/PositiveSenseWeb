@@ -121,7 +121,7 @@ try {
     $_SESSION['usuario_email'] = $email;
     $_SESSION['usuario_tipo'] = $tipo_usuario;
     $_SESSION['usuario_foto'] = 'img/avatars/avatar-vazio.svg';
-    
+
     // CRÍTICO: Salva a sessão imediatamente
     session_write_close();
 
