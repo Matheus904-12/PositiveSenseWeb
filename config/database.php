@@ -8,7 +8,13 @@
  */
 
 // Detectar ambiente automaticamente
-$isVercel = isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL']);
+$isVercel = (
+    isset($_ENV['VERCEL']) ||
+    isset($_SERVER['VERCEL']) ||
+    isset($_ENV['VERCEL_ENV']) ||
+    strpos($_SERVER['HTTP_HOST'] ?? '', 'vercel.app') !== false
+);
+
 $isLocal = (
     !$isVercel &&
     (
@@ -24,11 +30,11 @@ if ($isVercel) {
     // ========================================
     // AMBIENTE VERCEL (TiDB Cloud)
     // ========================================
-    define('DB_HOST', getenv('DB_HOST') ?: $_ENV['DB_HOST']);
-    define('DB_PORT', getenv('DB_PORT') ?: $_ENV['DB_PORT']);
-    define('DB_NAME', getenv('DB_NAME') ?: $_ENV['DB_NAME']);
-    define('DB_USER', getenv('DB_USER') ?: $_ENV['DB_USER']);
-    define('DB_PASS', getenv('DB_PASS') ?: $_ENV['DB_PASS']);
+    define('DB_HOST', getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? 'gateway01us-east-1.prod.aws.tidbcloud.com'));
+    define('DB_PORT', getenv('DB_PORT') ?: ($_ENV['DB_PORT'] ?? '4000'));
+    define('DB_NAME', getenv('DB_NAME') ?: ($_ENV['DB_NAME'] ?? 'positivesense'));
+    define('DB_USER', getenv('DB_USER') ?: ($_ENV['DB_USER'] ?? ''));
+    define('DB_PASS', getenv('DB_PASS') ?: ($_ENV['DB_PASS'] ?? ''));
     define('DB_CHARSET', 'utf8mb4');
     define('DB_ENV', 'PRODUCTION-VERCEL-TIDB');
     define('USE_SSL', true);
@@ -38,10 +44,13 @@ if ($isVercel) {
     // AMBIENTE LOCAL (XAMPP)
     // ========================================
     define('DB_HOST', 'localhost');
+    define('DB_PORT', '3306');
     define('DB_NAME', 'positivesense');
     define('DB_USER', 'root');
     define('DB_PASS', ''); // Altere se tiver senha no MySQL
     define('DB_CHARSET', 'utf8mb4');
+    define('DB_ENV', 'LOCAL-XAMPP');
+    define('USE_SSL', false);
 } else {
     // ========================================
     // AMBIENTE PRODUÇÃO (INFINITYFREE)
@@ -51,11 +60,10 @@ if ($isVercel) {
     define('DB_NAME', 'if0_40192662_positivesense');
     define('DB_USER', 'if0_40192662');
     define('DB_PASS', '0k9Y00tDgU');
+    define('DB_CHARSET', 'utf8mb4');
     define('DB_ENV', 'PRODUCTION-INFINITYFREE');
     define('USE_SSL', false);
 }
-
-define('DB_CHARSET', 'utf8mb4');
 
 // Classe de conexão com banco de dados
 class Database
