@@ -1,0 +1,137 @@
+<?php
+/**
+ * ========================================
+ * PROCESSAMENTO DE LOGIN
+ * PositiveSense - Sistema de Autenticação
+ * ========================================
+ */
+
+session_start();
+require_once __DIR__ . '/config/database.php';
+
+header('Content-Type: application/json; charset=utf-8');
+
+// Função para registrar log de acesso
+function registrarLog($usuario_id, $acao, $detalhes = null) {
+    try {
+        $db = getDB();
+        $stmt = $db->prepare("
+            INSERT INTO logs_acesso (usuario_id, acao, ip_address, user_agent, detalhes)
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $stmt->execute([
+            $usuario_id,
+            $acao,
+            $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+            $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+            $detalhes
+        ]);
+    } catch(Exception $e) {
+        error_log("Erro ao registrar log: " . $e->getMessage());
+    }
+}
+
+// Função para criar sessão
+function criarSessao($usuario_id) {
+    try {
+        $db = getDB();
+        $token = bin2hex(random_bytes(32));
+        $expiracao = date('Y-m-d H:i:s', strtotime('+30 days'));
+
+        $stmt = $db->prepare("
+            INSERT INTO sessoes (usuario_id, token_sessao, ip_address, user_agent, data_expiracao)
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $stmt->execute([
+            $usuario_id,
+            $token,
+            $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+            $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+            $expiracao
+        ]);
+
+        return $token;
+    } catch(Exception $e) {
+        error_log("Erro ao criar sessão: " . $e->getMessage());
+        return null;
+    }
+}
+
+// Verifica se é requisição POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'message' => 'Método não permitido']);
+    exit;
+}
+
+// Obtém dados do POST
+$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+$senha = $_POST['senha'] ?? '';
+$lembrar = isset($_POST['lembrar']);
+
+// Validações
+if (empty($email) || empty($senha)) {
+    echo json_encode(['success' => false, 'message' => 'Por favor, preencha todos os campos']);
+    exit;
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['success' => false, 'message' => 'E-mail inválido']);
+    exit;
+}
+
+try {
+    $db = getDB();
+
+    // Busca usuário por e-mail
+    $stmt = $db->prepare("SELECT * FROM usuarios WHERE email = ? AND status = 'ativo' LIMIT 1");
+    $stmt->execute([$email]);
+    $usuario = $stmt->fetch();
+
+    if (!$usuario) {
+        registrarLog(null, 'login_falha', "E-mail não encontrado: $email");
+        echo json_encode(['success' => false, 'message' => 'E-mail ou senha incorretos']);
+        exit;
+    }
+
+    // Verifica senha
+    if (!password_verify($senha, $usuario['senha'])) {
+        registrarLog($usuario['id'], 'login_falha', "Senha incorreta");
+        echo json_encode(['success' => false, 'message' => 'E-mail ou senha incorretos']);
+        exit;
+    }
+
+    // Login bem-sucedido
+    $_SESSION['usuario_id'] = $usuario['id'];
+    $_SESSION['usuario_nome'] = $usuario['nome'];
+    $_SESSION['usuario_email'] = $usuario['email'];
+    $_SESSION['usuario_tipo'] = $usuario['tipo_usuario'];
+    $_SESSION['usuario_foto'] = $usuario['foto_perfil'];
+
+    // Atualiza último acesso
+    $stmt = $db->prepare("UPDATE usuarios SET ultimo_acesso = NOW() WHERE id = ?");
+    $stmt->execute([$usuario['id']]);
+
+    // Cria sessão persistente no banco (sempre, não só quando marcar "lembrar")
+    $token_sessao = criarSessao($usuario['id']);
+    if ($token_sessao) {
+        // Cookie expira em 30 dias para manter login
+        setcookie('sessao_token', $token_sessao, time() + (30 * 24 * 60 * 60), '/', '', false, true);
+    }
+
+    // Registra log
+    registrarLog($usuario['id'], 'login_sucesso');
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Login realizado com sucesso!',
+        'redirect' => 'perfil.php',
+        'usuario' => [
+            'nome' => $usuario['nome'],
+            'tipo' => $usuario['tipo_usuario']
+        ]
+    ]);
+
+} catch(PDOException $e) {
+    error_log("Erro no login: " . $e->getMessage());
+    echo json_encode(['success' => false, 'message' => 'Erro ao processar login. Tente novamente.']);
+}

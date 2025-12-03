@@ -1,0 +1,35 @@
+{
+    "recommendations": [
+        // PHP Development
+        "brapifra.phpserver", // PHP Server - Servidor com recarga automática
+        "bmewburn.vscode-intelephense-client", // PHP IntelliSense
+        "xdebug.php-debug", // PHP Debug
+        // Web Development
+        "ritwickdey.liveserver", // Live Server (alternativa)
+        "formulahendry.auto-close-tag", // Auto Close Tag
+        "formulahendry.auto-rename-tag", // Auto Rename Tag
+        // CSS/HTML
+        "ecmel.vscode-html-css", // HTML CSS Support
+        "zignd.html-css-class-completion", // CSS Class IntelliSense
+        "bradlc.vscode-tailwindcss", // Tailwind CSS (opcional)
+        // JavaScript
+        "dbaeumer.vscode-eslint", // ESLint
+        "esbenp.prettier-vscode", // Prettier
+        // Git
+        "eamodio.gitlens", // GitLens
+        "mhutchie.git-graph", // Git Graph
+        // Productivity
+        "christian-kohler.path-intellisense", // Path IntelliSense
+        "oderwat.indent-rainbow", // Indent Rainbow
+        "streetsidesoftware.code-spell-checker", // Spell Checker
+        "wayou.vscode-todo-highlight", // TODO Highlight
+        // Icons & Themes
+        "pkief.material-icon-theme", // Material Icon Theme
+        "zhuangtongfa.material-theme", // One Dark Pro theme
+        // Utilities
+        "aaron-bond.better-comments", // Better Comments
+        "naumovs.color-highlight", // Color Highlight
+        "pranaygp.vscode-css-peek", // CSS Peek
+        "vincaslt.highlight-matching-tag" // Highlight Matching Tag
+    ]
+}

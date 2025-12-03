@@ -1,0 +1,26 @@
+# Proteção do diretório de uploads
+
+# Permite apenas imagens
+
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+Order Allow,Deny
+Allow from all
+</FilesMatch>
+
+# Bloqueia execução de scripts PHP
+
+<FilesMatch "\.php$">
+Order Deny,Allow
+Deny from all
+</FilesMatch>
+
+# Previne listagem de diretórios
+
+Options -Indexes
+
+# Headers de segurança
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>

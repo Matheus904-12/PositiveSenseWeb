@@ -1,0 +1,141 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🚀 Iniciar Servidor PHP",
+            "type": "shell",
+            "command": "php",
+            "args": [
+                "-S",
+                "localhost:8000"
+            ],
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^(.*)$",
+                    "file": 1,
+                    "location": 2,
+                    "message": 3
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^.*Development Server.*started.*$",
+                    "endsPattern": "^.*Listening on.*$"
+                }
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "⚙️ Validar Sintaxe PHP (Todos os arquivos)",
+            "type": "shell",
+            "command": "Get-ChildItem -Path '*.php' -Recurse | Where-Object { $_.DirectoryName -notmatch '.history' } | ForEach-Object { Write-Host \"Validando: $($_.Name)\" -ForegroundColor Cyan; php -l $_.FullName }",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "group": "test"
+        },
+        {
+            "label": "🔍 Validar Sintaxe PHP (Arquivo Atual)",
+            "type": "shell",
+            "command": "php -l ${file}",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "group": "test"
+        },
+        {
+            "label": "🧹 Limpar Cache do Navegador",
+            "type": "shell",
+            "command": "Write-Host '🧹 Dica: Pressione Ctrl+Shift+R no navegador para fazer Hard Reload' -ForegroundColor Yellow",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "label": "🌐 Abrir no Navegador (localhost:8000)",
+            "type": "shell",
+            "command": "Start-Process",
+            "args": [
+                "http://localhost:8000"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false
+            }
+        },
+        {
+            "label": "🛑 Parar Servidor PHP",
+            "type": "shell",
+            "command": "Stop-Process -Name php -Force",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "label": "📊 Mostrar Info do Projeto",
+            "type": "shell",
+            "command": "Write-Host '📊 PositiveSense - Info do Projeto' -ForegroundColor Cyan; Write-Host '================================' -ForegroundColor Cyan; Write-Host '📁 Páginas PHP:' -ForegroundColor Green; (Get-ChildItem -Path '*.php' -Exclude 'partials.php' | Measure-Object).Count; Write-Host '🎨 Arquivos CSS:' -ForegroundColor Green; (Get-ChildItem -Path 'css/*.css' | Measure-Object).Count; Write-Host '⚡ Arquivos JS:' -ForegroundColor Green; (Get-ChildItem -Path 'js/*.js' | Measure-Object).Count; Write-Host '🖼️ Imagens:' -ForegroundColor Green; (Get-ChildItem -Path 'img/*' | Measure-Object).Count; Write-Host '================================' -ForegroundColor Cyan",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "label": "🚀 Build & Run (Iniciar Tudo)",
+            "dependsOn": [
+                "🚀 Iniciar Servidor PHP",
+                "🌐 Abrir no Navegador (localhost:8000)"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        }
+    ]
+}
