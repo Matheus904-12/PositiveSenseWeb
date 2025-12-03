@@ -13,12 +13,17 @@
  * @date 2025
  */
 
+// Inicia output buffering para evitar problemas com headers no Vercel
+if (!ob_get_level()) {
+    ob_start();
+}
+
 // Inicia sessão se ainda não foi iniciada
 if (session_status() === PHP_SESSION_NONE) {
     // Configurações de segurança da sessão
-    ini_set('session.cookie_httponly', 1);
-    ini_set('session.use_only_cookies', 1);
-    ini_set('session.cookie_lifetime', 0); // Sessão expira ao fechar navegador (se não tiver "lembrar-me")
+    @ini_set('session.cookie_httponly', 1);
+    @ini_set('session.use_only_cookies', 1);
+    @ini_set('session.cookie_lifetime', 0); // Sessão expira ao fechar navegador (se não tiver "lembrar-me")
 
     // Detecta se está no Vercel (serverless)
     $isVercel = (
@@ -30,11 +35,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
     // Configurações de cookie para Vercel (HTTPS)
     if ($isVercel) {
-        ini_set('session.cookie_secure', 1); // HTTPS only
-        ini_set('session.cookie_samesite', 'Lax');
+        @ini_set('session.cookie_secure', 1); // HTTPS only
+        @ini_set('session.cookie_samesite', 'Lax');
     }
 
-    session_start();
+    @session_start();
 }
 
 /**
