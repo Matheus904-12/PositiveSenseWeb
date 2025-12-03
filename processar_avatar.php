@@ -1,15 +1,16 @@
 <?php
+
 /**
  * ========================================
  * PROCESSAR UPLOAD DE FOTO DE PERFIL
  * ========================================
  */
 
-session_start();
+require_once __DIR__ . '/config/session.php';
 header('Content-Type: application/json');
 
 // Verifica se está logado
-if (!isset($_SESSION['usuario_id'])) {
+if (!estaLogado()) {
     echo json_encode(['sucesso' => false, 'mensagem' => 'Sessão expirada. Faça login novamente.']);
     exit;
 }
@@ -99,7 +100,6 @@ try {
         'mensagem' => 'Foto atualizada com sucesso!',
         'foto_url' => $caminhoRelativo
     ]);
-
 } catch (Exception $e) {
     echo json_encode([
         'sucesso' => false,
@@ -110,7 +110,8 @@ try {
 /**
  * Redimensiona imagem mantendo proporção
  */
-function redimensionarImagem($caminho, $larguraMax, $alturaMax) {
+function redimensionarImagem($caminho, $larguraMax, $alturaMax)
+{
     try {
         // Detecta tipo de imagem
         $info = getimagesize($caminho);
@@ -157,10 +158,16 @@ function redimensionarImagem($caminho, $larguraMax, $alturaMax) {
 
         // Redimensiona
         imagecopyresampled(
-            $imagemNova, $imagemOriginal,
-            0, 0, 0, 0,
-            $novaLargura, $novaAltura,
-            $larguraOriginal, $alturaOriginal
+            $imagemNova,
+            $imagemOriginal,
+            0,
+            0,
+            0,
+            0,
+            $novaLargura,
+            $novaAltura,
+            $larguraOriginal,
+            $alturaOriginal
         );
 
         // Salva imagem redimensionada
