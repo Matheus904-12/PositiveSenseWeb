@@ -40,8 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Define header depois das validações iniciais
-header('Content-Type: application/json; charset=utf-8');
+// NÃO definir header aqui - será definido DEPOIS de setcookie
 
 // Obtém e sanitiza dados
 $nome = trim($_POST['nome'] ?? '');
@@ -53,31 +52,37 @@ $aceitar_termos = isset($_POST['aceitar_termos']);
 
 // Validações
 if (empty($nome) || empty($email) || empty($senha) || empty($confirmar_senha)) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Por favor, preencha todos os campos obrigatórios']);
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'E-mail inválido']);
     exit;
 }
 
 if (strlen($senha) < 6) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'A senha deve ter no mínimo 6 caracteres']);
     exit;
 }
 
 if ($senha !== $confirmar_senha) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'As senhas não coincidem']);
     exit;
 }
 
 if (!in_array($tipo_usuario, ['aluno', 'professor', 'responsavel'])) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Tipo de usuário inválido']);
     exit;
 }
 
 if (!$aceitar_termos) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Você deve aceitar os termos de uso']);
     exit;
 }
@@ -90,6 +95,7 @@ try {
     $stmt->execute([$email]);
 
     if ($stmt->fetch()) {
+        header('Content-Type: application/json; charset=utf-8');
         echo json_encode(['success' => false, 'message' => 'Este e-mail já está cadastrado']);
         exit;
     }
@@ -147,15 +153,21 @@ try {
         'domain' => '',
         'secure' => $isVercel, // HTTPS no Vercel
         'httponly' => true,
-        'samesite' => 'Lax'
+        'samesite' => $isVercel ? 'None' : 'Lax' // None para HTTPS cross-site
     ];
 
     setcookie('sessao_token', $token, $cookieOptions);
+    
+    // Log de debug
+    error_log("Registro concluído - Usuario ID: $usuario_id, Token gerado");
+
+    // AGORA sim, define header JSON (após cookie)
+    header('Content-Type: application/json; charset=utf-8');
 
     echo json_encode([
         'success' => true,
-        'message' => 'Cadastro realizado com sucesso! Redirecionando para seu perfil...',
-        'redirect' => 'perfil.php?novo=1'
+        'message' => 'Cadastro realizado com sucesso! Redirecionando...',
+        'redirect' => 'inicial.php' // Mudado de perfil.php?novo=1 para inicial.php
     ]);
 } catch (PDOException $e) {
     error_log("Erro no registro: " . $e->getMessage());
@@ -176,6 +188,7 @@ try {
         $mensagem = 'Não foi possível conectar ao MySQL. Verifique se o MySQL está rodando no XAMPP.';
     }
 
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'success' => false,
         'message' => $mensagem,
@@ -183,6 +196,7 @@ try {
     ]);
 } catch (Exception $e) {
     error_log("Erro geral no registro: " . $e->getMessage());
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'success' => false,
         'message' => 'Erro inesperado ao processar cadastro.',

@@ -67,8 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Define header depois das validações iniciais
-header('Content-Type: application/json; charset=utf-8');
+// NÃO definir header aqui - será definido DEPOIS de setcookie
 
 // Obtém dados do POST
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -77,11 +76,13 @@ $lembrar = isset($_POST['lembrar']);
 
 // Validações
 if (empty($email) || empty($senha)) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Por favor, preencha todos os campos']);
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'E-mail inválido']);
     exit;
 }
@@ -96,6 +97,7 @@ try {
 
     if (!$usuario) {
         registrarLog(null, 'login_falha', "E-mail não encontrado: $email");
+        header('Content-Type: application/json; charset=utf-8');
         echo json_encode(['success' => false, 'message' => 'E-mail ou senha incorretos']);
         exit;
     }
@@ -103,6 +105,7 @@ try {
     // Verifica senha
     if (!password_verify($senha, $usuario['senha'])) {
         registrarLog($usuario['id'], 'login_falha', "Senha incorreta");
+        header('Content-Type: application/json; charset=utf-8');
         echo json_encode(['success' => false, 'message' => 'E-mail ou senha incorretos']);
         exit;
     }
@@ -120,6 +123,9 @@ try {
 
     // Cria sessão persistente no banco (sempre, não só quando marcar "lembrar")
     $token_sessao = criarSessao($usuario['id']);
+    
+    // Log de debug
+    error_log("Login bem-sucedido - Usuario ID: {$usuario['id']}, Token gerado: " . ($token_sessao ? 'SIM' : 'NÃO'));
 
     // IMPORTANTE: Cookie DEVE ser enviado ANTES de qualquer output (echo/json)
     if ($token_sessao) {
@@ -135,23 +141,29 @@ try {
         $cookieOptions = [
             'expires' => time() + (30 * 24 * 60 * 60),
             'path' => '/',
-            'domain' => '',
+            'domain' => '', // Vazio = domínio atual
             'secure' => $isVercel, // HTTPS no Vercel
             'httponly' => true,
-            'samesite' => 'Lax'
+            'samesite' => $isVercel ? 'None' : 'Lax' // None para HTTPS cross-site
         ];
 
-        // Define cookie ANTES do echo json_encode
+        // Define cookie ANTES do header e echo
         setcookie('sessao_token', $token_sessao, $cookieOptions);
+        
+        // Log de debug
+        error_log("Cookie definido - Ambiente: " . ($isVercel ? 'VERCEL' : 'LOCAL') . ", Secure: " . ($isVercel ? 'true' : 'false') . ", SameSite: " . ($isVercel ? 'None' : 'Lax'));
     }
 
     // Registra log
     registrarLog($usuario['id'], 'login_sucesso');
 
+    // AGORA sim, define header JSON (após cookie)
+    header('Content-Type: application/json; charset=utf-8');
+
     echo json_encode([
         'success' => true,
         'message' => 'Login realizado com sucesso!',
-        'redirect' => 'perfil.php',
+        'redirect' => 'inicial.php', // Mudado de perfil.php para inicial.php
         'usuario' => [
             'nome' => $usuario['nome'],
             'tipo' => $usuario['tipo_usuario']
@@ -159,5 +171,6 @@ try {
     ]);
 } catch (PDOException $e) {
     error_log("Erro no login: " . $e->getMessage());
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(['success' => false, 'message' => 'Erro ao processar login. Tente novamente.']);
 }
