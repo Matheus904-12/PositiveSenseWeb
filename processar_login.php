@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ========================================
  * PROCESSAMENTO DE LOGIN
@@ -12,7 +13,8 @@ require_once __DIR__ . '/config/database.php';
 header('Content-Type: application/json; charset=utf-8');
 
 // Função para registrar log de acesso
-function registrarLog($usuario_id, $acao, $detalhes = null) {
+function registrarLog($usuario_id, $acao, $detalhes = null)
+{
     try {
         $db = getDB();
         $stmt = $db->prepare("
@@ -26,13 +28,14 @@ function registrarLog($usuario_id, $acao, $detalhes = null) {
             $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
             $detalhes
         ]);
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         error_log("Erro ao registrar log: " . $e->getMessage());
     }
 }
 
 // Função para criar sessão
-function criarSessao($usuario_id) {
+function criarSessao($usuario_id)
+{
     try {
         $db = getDB();
         $token = bin2hex(random_bytes(32));
@@ -51,7 +54,7 @@ function criarSessao($usuario_id) {
         ]);
 
         return $token;
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         error_log("Erro ao criar sessão: " . $e->getMessage());
         return null;
     }
@@ -114,8 +117,25 @@ try {
     // Cria sessão persistente no banco (sempre, não só quando marcar "lembrar")
     $token_sessao = criarSessao($usuario['id']);
     if ($token_sessao) {
+        // Detecta ambiente Vercel para cookies seguros
+        $isVercel = (
+            isset($_ENV['VERCEL']) ||
+            isset($_SERVER['VERCEL']) ||
+            isset($_ENV['VERCEL_ENV']) ||
+            strpos($_SERVER['HTTP_HOST'] ?? '', 'vercel.app') !== false
+        );
+
         // Cookie expira em 30 dias para manter login
-        setcookie('sessao_token', $token_sessao, time() + (30 * 24 * 60 * 60), '/', '', false, true);
+        $cookieOptions = [
+            'expires' => time() + (30 * 24 * 60 * 60),
+            'path' => '/',
+            'domain' => '',
+            'secure' => $isVercel, // HTTPS no Vercel
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ];
+
+        setcookie('sessao_token', $token_sessao, $cookieOptions);
     }
 
     // Registra log
@@ -130,8 +150,7 @@ try {
             'tipo' => $usuario['tipo_usuario']
         ]
     ]);
-
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     error_log("Erro no login: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Erro ao processar login. Tente novamente.']);
 }
