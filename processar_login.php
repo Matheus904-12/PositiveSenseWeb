@@ -116,6 +116,8 @@ try {
 
     // Cria sessão persistente no banco (sempre, não só quando marcar "lembrar")
     $token_sessao = criarSessao($usuario['id']);
+
+    // IMPORTANTE: Cookie DEVE ser enviado ANTES de qualquer output (echo/json)
     if ($token_sessao) {
         // Detecta ambiente Vercel para cookies seguros
         $isVercel = (
@@ -135,6 +137,7 @@ try {
             'samesite' => 'Lax'
         ];
 
+        // Define cookie ANTES do echo json_encode
         setcookie('sessao_token', $token_sessao, $cookieOptions);
     }
 
