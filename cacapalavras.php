@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/config/session.php';
+
 // Configurações do site
 $site_config = [
     'title' => 'Caça-Palavras - PositiveSense',
