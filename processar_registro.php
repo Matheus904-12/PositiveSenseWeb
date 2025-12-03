@@ -121,6 +121,9 @@ try {
     $_SESSION['usuario_email'] = $email;
     $_SESSION['usuario_tipo'] = $tipo_usuario;
     $_SESSION['usuario_foto'] = 'img/avatars/avatar-vazio.svg';
+    
+    // CRÍTICO: Salva a sessão imediatamente
+    session_write_close();
 
     // Cria sessão persistente no banco
     $token = bin2hex(random_bytes(32));
@@ -153,11 +156,11 @@ try {
         'domain' => '',
         'secure' => $isVercel, // HTTPS no Vercel
         'httponly' => true,
-        'samesite' => $isVercel ? 'None' : 'Lax' // None para HTTPS cross-site
+        'samesite' => 'Lax' // Lax permite cookies no mesmo domínio
     ];
 
     setcookie('sessao_token', $token, $cookieOptions);
-    
+
     // Log de debug
     error_log("Registro concluído - Usuario ID: $usuario_id, Token gerado");
 

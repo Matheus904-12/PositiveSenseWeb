@@ -1,9 +1,10 @@
 <?php
+
 /**
  * ========================================
  * DEBUG DE SESSÃO - POSITIVESENSE
  * ========================================
- * 
+ *
  * Arquivo para verificar o estado da sessão e cookies
  */
 
@@ -51,7 +52,7 @@ if (estaLogado()) {
     try {
         require_once __DIR__ . '/config/database.php';
         $db = getDB();
-        
+
         // Busca sessões ativas do usuário
         $stmt = $db->prepare("
             SELECT id, token_sessao, data_criacao, data_expiracao, ip_address
@@ -61,10 +62,10 @@ if (estaLogado()) {
         ");
         $stmt->execute([$_SESSION['usuario_id']]);
         $sessoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         $debug_info['sessoes_banco'] = [
             'total_ativas' => count($sessoes),
-            'sessoes' => array_map(function($s) {
+            'sessoes' => array_map(function ($s) {
                 return [
                     'id' => $s['id'],
                     'token' => substr($s['token_sessao'], 0, 10) . '...',

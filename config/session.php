@@ -48,6 +48,11 @@ if (session_status() === PHP_SESSION_NONE) {
  */
 function verificarSessao()
 {
+    // Reinicia sessão se foi fechada
+    if (session_status() === PHP_SESSION_NONE) {
+        @session_start();
+    }
+    
     // Se já está logado, não precisa verificar token
     if (isset($_SESSION['usuario_id'])) {
         error_log("Sessão já existe - Usuario ID: {$_SESSION['usuario_id']}");
@@ -59,7 +64,7 @@ function verificarSessao()
         error_log("Nenhum cookie de sessão encontrado");
         return false;
     }
-    
+
     error_log("Cookie de sessão encontrado, tentando restaurar sessão...");
 
     try {
@@ -87,7 +92,7 @@ function verificarSessao()
             $_SESSION['usuario_email'] = $sessao['email'];
             $_SESSION['usuario_tipo'] = $sessao['tipo_usuario'];
             $_SESSION['usuario_foto'] = $sessao['foto_perfil'];
-            
+
             error_log("Sessão restaurada com sucesso - Usuario: {$sessao['nome']} (ID: {$sessao['id']})");
 
             // Atualiza último acesso
@@ -114,7 +119,7 @@ function verificarSessao()
                 'domain' => '',
                 'secure' => $isVercel, // HTTPS no Vercel
                 'httponly' => true,
-                'samesite' => $isVercel ? 'None' : 'Lax' // None para HTTPS cross-site
+                'samesite' => 'Lax' // Lax permite cookies no mesmo domínio
             ];
 
             setcookie('sessao_token', $token, $cookieOptions);

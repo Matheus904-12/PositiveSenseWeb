@@ -116,6 +116,9 @@ try {
     $_SESSION['usuario_email'] = $usuario['email'];
     $_SESSION['usuario_tipo'] = $usuario['tipo_usuario'];
     $_SESSION['usuario_foto'] = $usuario['foto_perfil'];
+    
+    // CRÍTICO: Salva a sessão imediatamente
+    session_write_close();
 
     // Atualiza último acesso
     $stmt = $db->prepare("UPDATE usuarios SET ultimo_acesso = NOW() WHERE id = ?");
@@ -123,7 +126,7 @@ try {
 
     // Cria sessão persistente no banco (sempre, não só quando marcar "lembrar")
     $token_sessao = criarSessao($usuario['id']);
-    
+
     // Log de debug
     error_log("Login bem-sucedido - Usuario ID: {$usuario['id']}, Token gerado: " . ($token_sessao ? 'SIM' : 'NÃO'));
 
@@ -144,12 +147,12 @@ try {
             'domain' => '', // Vazio = domínio atual
             'secure' => $isVercel, // HTTPS no Vercel
             'httponly' => true,
-            'samesite' => $isVercel ? 'None' : 'Lax' // None para HTTPS cross-site
+            'samesite' => 'Lax' // Lax permite cookies no mesmo domínio
         ];
 
         // Define cookie ANTES do header e echo
         setcookie('sessao_token', $token_sessao, $cookieOptions);
-        
+
         // Log de debug
         error_log("Cookie definido - Ambiente: " . ($isVercel ? 'VERCEL' : 'LOCAL') . ", Secure: " . ($isVercel ? 'true' : 'false') . ", SameSite: " . ($isVercel ? 'None' : 'Lax'));
     }
