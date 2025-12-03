@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ========================================
  * POSITIVESENSE - GERENCIAMENTO DE SESSÃO
@@ -19,6 +20,20 @@ if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.use_only_cookies', 1);
     ini_set('session.cookie_lifetime', 0); // Sessão expira ao fechar navegador (se não tiver "lembrar-me")
 
+    // Detecta se está no Vercel (serverless)
+    $isVercel = (
+        isset($_ENV['VERCEL']) ||
+        isset($_SERVER['VERCEL']) ||
+        isset($_ENV['VERCEL_ENV']) ||
+        strpos($_SERVER['HTTP_HOST'] ?? '', 'vercel.app') !== false
+    );
+
+    // Configurações de cookie para Vercel (HTTPS)
+    if ($isVercel) {
+        ini_set('session.cookie_secure', 1); // HTTPS only
+        ini_set('session.cookie_samesite', 'Lax');
+    }
+
     session_start();
 }
 
@@ -26,7 +41,8 @@ if (session_status() === PHP_SESSION_NONE) {
  * Verifica se há um token de sessão válido
  * Restaura sessão do usuário se token for válido
  */
-function verificarSessao() {
+function verificarSessao()
+{
     // Se já está logado, não precisa verificar token
     if (isset($_SESSION['usuario_id'])) {
         return true;
@@ -73,7 +89,24 @@ function verificarSessao() {
             $stmt->execute([$nova_expiracao, $sessao['id']]);
 
             // Renova o cookie também
-            setcookie('sessao_token', $token, time() + (30 * 24 * 60 * 60), '/', '', false, true);
+            // Detecta ambiente Vercel para cookies seguros
+            $isVercel = (
+                isset($_ENV['VERCEL']) ||
+                isset($_SERVER['VERCEL']) ||
+                isset($_ENV['VERCEL_ENV']) ||
+                strpos($_SERVER['HTTP_HOST'] ?? '', 'vercel.app') !== false
+            );
+
+            $cookieOptions = [
+                'expires' => time() + (30 * 24 * 60 * 60),
+                'path' => '/',
+                'domain' => '',
+                'secure' => $isVercel, // HTTPS no Vercel
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ];
+
+            setcookie('sessao_token', $token, $cookieOptions);
 
             return true;
         } else {
@@ -81,7 +114,7 @@ function verificarSessao() {
             setcookie('sessao_token', '', time() - 3600, '/');
             return false;
         }
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         error_log("Erro ao verificar sessão: " . $e->getMessage());
         return false;
     }
@@ -91,7 +124,8 @@ function verificarSessao() {
  * Verifica se usuário está logado
  * @return bool
  */
-function estaLogado() {
+function estaLogado()
+{
     verificarSessao();
     return isset($_SESSION['usuario_id']);
 }
@@ -100,7 +134,8 @@ function estaLogado() {
  * Obtém dados do usuário logado
  * @return array|null
  */
-function getUsuarioLogado() {
+function getUsuarioLogado()
+{
     if (!estaLogado()) {
         return null;
     }
@@ -117,7 +152,8 @@ function getUsuarioLogado() {
 /**
  * Requer autenticação - redireciona para login se não estiver logado
  */
-function requerAutenticacao() {
+function requerAutenticacao()
+{
     if (!estaLogado()) {
         header('Location: login.php');
         exit;
