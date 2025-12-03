@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/config/session.php';
 require_once __DIR__ . '/partials.php';
 
 // Configurações do site
