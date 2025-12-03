@@ -219,7 +219,8 @@ require_once __DIR__ . '/partials.php';
 
                 const response = await fetch('processar_registro.php', {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    credentials: 'include' // IMPORTANTE: Inclui cookies na requisição
                 });
 
                 console.log('Status da resposta:', response.status);
