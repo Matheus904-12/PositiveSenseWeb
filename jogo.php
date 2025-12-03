@@ -137,10 +137,12 @@ $social_media = [
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(3, 380px) !important;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 380px));
             gap: 2.5rem;
             justify-content: center;
-            justify-items: center;
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 1rem;
         }
 
         .game-card {
@@ -157,8 +159,9 @@ $social_media = [
             position: relative;
             overflow: hidden;
             border: 2px solid transparent;
-            height: 420px !important;
-            width: 380px !important;
+            height: 420px;
+            width: 100%;
+            max-width: 380px;
             box-sizing: border-box;
         }
 
@@ -255,9 +258,16 @@ $social_media = [
             background: #5B8FC4;
         }
 
+        @media (max-width: 1200px) {
+            .games-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 350px));
+                gap: 2rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .games-section {
-                padding: 100px 1.5rem 3rem;
+                padding: 100px 1rem 3rem;
             }
 
             .games-header h1 {
@@ -265,14 +275,25 @@ $social_media = [
             }
 
             .games-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
                 gap: 1.5rem;
+                padding: 0 0.5rem;
+            }
+
+            .game-card {
+                height: auto;
+                min-height: 380px;
+                padding: 2rem;
             }
         }
 
         @media (max-width: 480px) {
             .games-section {
-                padding: 90px 1rem 2rem;
+                padding: 90px 0.5rem 2rem;
+            }
+
+            .games-header {
+                padding: 0 1rem;
             }
 
             .games-header h1 {
@@ -281,15 +302,32 @@ $social_media = [
 
             .games-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 1.5rem;
+                padding: 0;
             }
 
             .game-card {
                 padding: 1.5rem;
+                height: auto;
+                min-height: 350px;
+                max-width: 100%;
             }
 
             .game-card-icon {
                 font-size: 3rem;
+                height: 60px;
+            }
+
+            .game-card h3 {
+                font-size: 1.3rem;
+                height: auto;
+                min-height: 50px;
+            }
+
+            .game-card p {
+                font-size: 0.95rem;
+                height: auto;
+                min-height: 60px;
             }
         }
     </style>
