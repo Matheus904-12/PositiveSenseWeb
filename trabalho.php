@@ -181,16 +181,16 @@ require_once __DIR__ . '/partials.php';
                                     <div style="margin-bottom: 2rem;">
                                         <img src="img/mascote.png" alt="Risco" style="width: 180px; height: auto;">
                                     </div>
-                                    
+
                                     <!-- Título -->
                                     <h3 style="color: #5B8FC4; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Bem-vindo ao PositiveSense!</h3>
-                                    
+
                                     <!-- Subtítulo -->
                                     <p style="color: #666; font-size: 1rem; text-align: center; margin-bottom: 2rem; max-width: 280px; line-height: 1.5;">Seu amigo virtual para momentos de calma e concentração</p>
-                                    
+
                                     <!-- Botão Começar -->
                                     <button style="background: #5B8FC4; color: white; border: none; padding: 1rem 3rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(91, 143, 196, 0.3); margin-bottom: 2rem;">Começar</button>
-                                    
+
                                     <!-- Ícones de atividades -->
                                     <div style="display: flex; gap: 2rem; justify-content: center;">
                                         <div style="text-align: center;">
@@ -216,8 +216,8 @@ require_once __DIR__ . '/partials.php';
 
                     <div class="app-description">
                         <p>
-                            O aplicativo PositiveSense traz o mascote Risco como seu guia pessoal! 
-                            Desenvolvido especialmente para crianças com TEA, o app oferece jogos educativos, 
+                            O aplicativo PositiveSense traz o mascote Risco como seu guia pessoal!
+                            Desenvolvido especialmente para crianças com TEA, o app oferece jogos educativos,
                             atividades de relaxamento e recursos de concentração em uma interface amigável e intuitiva.
                         </p>
                     </div>
