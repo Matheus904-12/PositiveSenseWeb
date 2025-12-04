@@ -217,7 +217,7 @@ require_once __DIR__ . '/partials.php';
                                 <strong>Android APK</strong>
                             </div>
                         </a>
-                        <a href="app/" class="store-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+                        <a href="app/application-1ba0fd4f-788c-4fd3-af77-5c3dfd38a806.apk" class="store-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
                             <i class="fas fa-download"></i>
                             <div>
                                 <span>Download local</span>
