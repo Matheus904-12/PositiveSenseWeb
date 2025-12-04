@@ -85,8 +85,9 @@ $footer_links = [
 ];
 
 $social_media = [
-    ['icon' => 'fab fa-whatsapp', 'url' => 'https://wa.me/5511999999999', 'title' => 'WhatsApp'],
-    ['icon' => 'fas fa-envelope', 'url' => 'mailto:positivesense@gmail.com', 'title' => 'Email']
+    ['icon' => 'fab fa-whatsapp', 'url' => 'https://wa.me/5511999999999?text=Olá!%20Vim%20do%20site%20PositiveSense', 'title' => 'WhatsApp'],
+    ['icon' => 'fas fa-envelope', 'url' => 'mailto:positivesense@gmail.com?subject=Contato%20do%20Site%20PositiveSense', 'title' => 'Email'],
+    ['icon' => 'fab fa-spotify', 'url' => 'https://open.spotify.com/playlist/37i9dQZF1DWY5LGZYBBHHz?si=uvyTRAomSNS4BJfcW9ol8A', 'title' => 'Spotify']
 ];
 ?>
 <!DOCTYPE html>
