@@ -172,33 +172,76 @@ require_once __DIR__ . '/partials.php';
     <section class="app-announcement">
         <div class="container">
             <div class="app-announcement-grid">
+                <div class="app-preview">
+                    <div class="app-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <div class="app-interface" style="background: linear-gradient(180deg, #E8F4FC 0%, #D8E8F5 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                                    <!-- Mascote Risco -->
+                                    <div style="margin-bottom: 2rem;">
+                                        <img src="img/mascote.png" alt="Risco" style="width: 180px; height: auto;">
+                                    </div>
+                                    
+                                    <!-- Título -->
+                                    <h3 style="color: #5B8FC4; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Bem-vindo ao PositiveSense!</h3>
+                                    
+                                    <!-- Subtítulo -->
+                                    <p style="color: #666; font-size: 1rem; text-align: center; margin-bottom: 2rem; max-width: 280px; line-height: 1.5;">Seu amigo virtual para momentos de calma e concentração</p>
+                                    
+                                    <!-- Botão Começar -->
+                                    <button style="background: #5B8FC4; color: white; border: none; padding: 1rem 3rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(91, 143, 196, 0.3); margin-bottom: 2rem;">Começar</button>
+                                    
+                                    <!-- Ícones de atividades -->
+                                    <div style="display: flex; gap: 2rem; justify-content: center;">
+                                        <div style="text-align: center;">
+                                            <i class="fas fa-gamepad" style="font-size: 2rem; color: #5B8FC4;"></i>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <i class="fas fa-book" style="font-size: 2rem; color: #5B8FC4;"></i>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <i class="fas fa-play-circle" style="font-size: 2rem; color: #5B8FC4;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="app-content">
                     <span class="app-badge">Em Breve</span>
                     <h2>Conheça o PositiveSense App</h2>
-                    <p class="app-subtitle">O aplicativo que conecta você ao sensor de som em tempo real</p>
+                    <p class="app-subtitle">Seu companheiro digital para momentos de calma e aprendizado</p>
 
                     <div class="app-description">
                         <p>
-                            Estamos desenvolvendo um aplicativo mobile completo que permitirá o monitoramento
-                            e controle total do sensor de som diretamente do seu smartphone. Com uma interface
-                            intuitiva e recursos avançados, você terá todas as ferramentas necessárias para
-                            criar um ambiente ideal de aprendizado.
+                            O aplicativo PositiveSense traz o mascote Risco como seu guia pessoal! 
+                            Desenvolvido especialmente para crianças com TEA, o app oferece jogos educativos, 
+                            atividades de relaxamento e recursos de concentração em uma interface amigável e intuitiva.
                         </p>
                     </div>
 
                     <div class="app-stats">
                         <div class="stat-item">
-                            <i class="fas fa-download"></i>
+                            <i class="fas fa-gamepad"></i>
                             <div>
-                                <strong>Em breve</strong>
-                                <span>Disponível para iOS e Android</span>
+                                <strong>Jogos Interativos</strong>
+                                <span>Memória, quebra-cabeça e muito mais</span>
                             </div>
                         </div>
                         <div class="stat-item">
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-book"></i>
                             <div>
-                                <strong>Gratuito</strong>
-                                <span>100% gratuito para todos os usuários</span>
+                                <strong>Conteúdo Educativo</strong>
+                                <span>Artigos e vídeos sobre autismo</span>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <strong>100% Gratuito</strong>
+                                <span>Desenvolvido com carinho para inclusão</span>
                             </div>
                         </div>
                     </div>
@@ -218,44 +261,6 @@ require_once __DIR__ . '/partials.php';
                                 <strong>Google Play</strong>
                             </div>
                         </a>
-                    </div>
-                </div>
-
-                <div class="app-preview">
-                    <div class="app-mockup">
-                        <div class="phone-frame">
-                            <div class="phone-screen">
-                                <div class="app-interface">
-                                    <div class="app-header-demo">
-                                        <i class="fas fa-bars"></i>
-                                        <span>PositiveSense</span>
-                                        <i class="fas fa-bell"></i>
-                                    </div>
-                                    <div class="app-main-demo">
-                                        <div class="sound-meter">
-                                            <div class="meter-circle">
-                                                <i class="fas fa-volume-up"></i>
-                                                <span class="meter-value">42<small>dB</small></span>
-                                            </div>
-                                            <p class="meter-status">Ambiente Calmo</p>
-                                        </div>
-                                        <div class="quick-actions">
-                                            <button class="action-btn-demo"><i class="fas fa-chart-bar"></i> Estatísticas</button>
-                                            <button class="action-btn-demo"><i class="fas fa-cog"></i> Configurar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="floating-icon icon-1">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="floating-icon icon-2">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="floating-icon icon-3">
-                            <i class="fas fa-cog"></i>
-                        </div>
                     </div>
                 </div>
             </div>
