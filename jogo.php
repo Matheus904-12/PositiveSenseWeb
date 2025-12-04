@@ -72,14 +72,15 @@ $jogos = [
 $jogo_id = null;
 
 $footer_links = [
-    'Navegação' => [
-        ['label' => 'Início', 'url' => 'inicial.php'],
-        ['label' => 'Sobre', 'url' => 'sobre.php'],
-        ['label' => 'Jogos', 'url' => 'jogo.php']
+    'Início' => [
+        ['label' => 'Home', 'url' => 'inicial.php']
+    ],
+    'Sobre nós' => [
+        ['label' => 'Nossos serviços', 'url' => 'sobre.php']
     ],
     'Suporte' => [
-        ['label' => 'Ajuda', 'url' => '#'],
-        ['label' => 'Contato', 'url' => '#']
+        ['label' => 'Telefones', 'url' => '#'],
+        ['label' => 'Chat', 'url' => '#']
     ]
 ];
 

@@ -54,7 +54,7 @@ $desafios = [
 // Dados do footer
 $footer_links = [
     'Início' => [
-        ['label' => 'Home', 'url' => 'index.php']
+        ['label' => 'Home', 'url' => 'inicial.php']
     ],
     'Sobre nós' => [
         ['label' => 'Nossos serviços', 'url' => 'sobre.php']
