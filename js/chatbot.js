@@ -160,8 +160,8 @@ class ChatbotAssistente {
                 </div>
                 <div class="message-content">
                     <div class="message-bubble">${this.formatMessage(
-                      text
-                    )}</div>
+      text
+    )}</div>
                     <div class="message-time">${time}</div>
                 </div>
             </div>
@@ -185,8 +185,8 @@ class ChatbotAssistente {
                 </div>
                 <div class="message-content">
                     <div class="message-bubble">${this.formatMessage(
-                      text
-                    )}</div>
+      text
+    )}</div>
                     <div class="message-time">${time}</div>
                 </div>
             </div>

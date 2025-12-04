@@ -591,10 +591,13 @@ try {
         @media (max-width: 768px) {
             .profile-section {
                 padding: 80px 0.5rem 1rem;
+                overflow-x: hidden;
             }
 
             .profile-container {
                 padding: 0 0.5rem;
+                max-width: 100%;
+                overflow-x: hidden;
             }
 
             .welcome-banner {
@@ -602,6 +605,7 @@ try {
                 text-align: center;
                 padding: 1.5rem 1rem;
                 margin-bottom: 1rem;
+                max-width: 100%;
             }
 
             .welcome-icon {
@@ -609,33 +613,49 @@ try {
                 height: 50px;
             }
 
+            .welcome-text {
+                max-width: 100%;
+                word-wrap: break-word;
+            }
+
             .welcome-text h2 {
-                font-size: 1.1rem;
+                font-size: 1.05rem;
                 margin-bottom: 0.3rem;
+                word-wrap: break-word;
             }
 
             .welcome-text p {
-                font-size: 0.85rem;
+                font-size: 0.82rem;
                 line-height: 1.4;
+                word-wrap: break-word;
             }
 
             .profile-header {
                 text-align: center;
                 flex-direction: column;
-                padding: 1.5rem 1rem;
+                padding: 1.5rem 0.8rem;
+                max-width: 100%;
             }
 
             .profile-avatar {
                 margin-bottom: 1rem;
             }
 
+            .profile-info h1 {
+                font-size: 1.3rem;
+                word-wrap: break-word;
+            }
+
             .profile-stats {
                 justify-content: center;
-                gap: 1rem;
+                gap: 0.8rem;
+                flex-wrap: wrap;
+                max-width: 100%;
             }
 
             .stat {
                 padding: 0.5rem;
+                min-width: 70px;
             }
 
             .stat-number {
@@ -643,33 +663,41 @@ try {
             }
 
             .stat-label {
-                font-size: 0.75rem;
+                font-size: 0.72rem;
             }
 
             .tabs {
                 flex-wrap: wrap;
                 gap: 0.3rem;
+                max-width: 100%;
             }
 
             .tab {
                 flex: 1;
-                min-width: 90px;
-                font-size: 0.85rem;
-                padding: 0.7rem 0.5rem;
+                min-width: 85px;
+                font-size: 0.82rem;
+                padding: 0.7rem 0.4rem;
             }
 
             .section-title {
-                font-size: 1.2rem;
+                font-size: 1.15rem;
                 margin-bottom: 1rem;
             }
 
             .games-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
+                max-width: 100%;
             }
 
             .game-card {
                 padding: 1rem;
+                max-width: 100%;
+            }
+
+            .tab-content {
+                max-width: 100%;
+                overflow-x: hidden;
             }
         }
     </style>
