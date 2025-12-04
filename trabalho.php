@@ -172,53 +172,16 @@ require_once __DIR__ . '/partials.php';
     <section class="app-announcement">
         <div class="container">
             <div class="app-announcement-grid">
-                <div class="app-preview">
-                    <div class="app-mockup">
-                        <div class="phone-frame">
-                            <div class="phone-screen">
-                                <div class="app-interface" style="background: linear-gradient(180deg, #E8F4FC 0%, #D8E8F5 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
-                                    <!-- Mascote Risco -->
-                                    <div style="margin-bottom: 2rem;">
-                                        <img src="img/mascote.png" alt="Risco" style="width: 180px; height: auto;">
-                                    </div>
-
-                                    <!-- Título -->
-                                    <h3 style="color: #5B8FC4; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Bem-vindo ao PositiveSense!</h3>
-
-                                    <!-- Subtítulo -->
-                                    <p style="color: #666; font-size: 1rem; text-align: center; margin-bottom: 2rem; max-width: 280px; line-height: 1.5;">Seu amigo virtual para momentos de calma e concentração</p>
-
-                                    <!-- Botão Começar -->
-                                    <button style="background: #5B8FC4; color: white; border: none; padding: 1rem 3rem; border-radius: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(91, 143, 196, 0.3); margin-bottom: 2rem;">Começar</button>
-
-                                    <!-- Ícones de atividades -->
-                                    <div style="display: flex; gap: 2rem; justify-content: center;">
-                                        <div style="text-align: center;">
-                                            <i class="fas fa-gamepad" style="font-size: 2rem; color: #5B8FC4;"></i>
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <i class="fas fa-book" style="font-size: 2rem; color: #5B8FC4;"></i>
-                                        </div>
-                                        <div style="text-align: center;">
-                                            <i class="fas fa-play-circle" style="font-size: 2rem; color: #5B8FC4;"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="app-content">
-                    <span class="app-badge">Em Breve</span>
-                    <h2>Conheça o PositiveSense App</h2>
-                    <p class="app-subtitle">Seu companheiro digital para momentos de calma e aprendizado</p>
+                    <span class="app-badge">Disponível Agora</span>
+                    <h2>Conheça o Risco - Amigo Virtual</h2>
+                    <p class="app-subtitle">Seu companheiro digital para momentos de calma e concentração</p>
 
                     <div class="app-description">
                         <p>
-                            O aplicativo PositiveSense traz o mascote Risco como seu guia pessoal!
-                            Desenvolvido especialmente para crianças com TEA, o app oferece jogos educativos,
-                            atividades de relaxamento e recursos de concentração em uma interface amigável e intuitiva.
+                            O aplicativo Risco - Amigo Virtual está disponível! Desenvolvido especialmente para 
+                            crianças com TEA, o app oferece jogos educativos, atividades de relaxamento e recursos 
+                            de concentração em uma interface amigável e intuitiva, com o mascote Risco como seu guia pessoal.
                         </p>
                     </div>
 
@@ -247,27 +210,71 @@ require_once __DIR__ . '/partials.php';
                     </div>
 
                     <div class="app-stores">
-                        <a href="#" class="store-btn disabled">
-                            <i class="fab fa-apple"></i>
+                        <a href="https://expo.dev/accounts/heloisamachado/projects/risco-amigo-virtual/builds/1ba0fd4f-788c-4fd3-af77-5c3dfd38a806" target="_blank" class="store-btn" style="background: linear-gradient(135deg, #5B8FC4, #4A90E2);">
+                            <i class="fab fa-android"></i>
                             <div>
-                                <span>Em breve na</span>
-                                <strong>App Store</strong>
+                                <span>Baixar agora</span>
+                                <strong>Android APK</strong>
                             </div>
                         </a>
-                        <a href="#" class="store-btn disabled">
-                            <i class="fab fa-google-play"></i>
+                        <a href="app/" class="store-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+                            <i class="fas fa-download"></i>
                             <div>
-                                <span>Em breve no</span>
-                                <strong>Google Play</strong>
+                                <span>Download local</span>
+                                <strong>APK do Repositório</strong>
                             </div>
                         </a>
                     </div>
                 </div>
+
+                <div class="app-preview">
+                    <div class="app-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <div class="app-interface" style="background: linear-gradient(180deg, #E8F4FC 0%, #D8E8F5 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+                                    <!-- Mascote Risco -->
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <img src="img/mascote.png" alt="Risco" style="width: 160px; height: auto;">
+                                    </div>
+                                    
+                                    <!-- Título -->
+                                    <h3 style="color: #5B8FC4; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center;">Bem-vindo ao<br>PositiveSense!</h3>
+                                    
+                                    <!-- Subtítulo -->
+                                    <p style="color: #666; font-size: 0.95rem; text-align: center; margin-bottom: 1.5rem; max-width: 260px; line-height: 1.5;">Seu amigo virtual para momentos de calma e concentração</p>
+                                    
+                                    <!-- Botão Começar -->
+                                    <button style="background: #5B8FC4; color: white; border: none; padding: 0.9rem 2.5rem; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(91, 143, 196, 0.3); margin-bottom: 1.5rem;">Começar</button>
+                                    
+                                    <!-- Ícones de atividades -->
+                                    <div style="display: flex; gap: 1.8rem; justify-content: center;">
+                                        <div style="text-align: center;">
+                                            <i class="fas fa-gamepad" style="font-size: 1.8rem; color: #5B8FC4;"></i>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <i class="fas fa-book" style="font-size: 1.8rem; color: #5B8FC4;"></i>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <i class="fas fa-play-circle" style="font-size: 1.8rem; color: #5B8FC4;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="floating-icon icon-1">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="floating-icon icon-2">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="floating-icon icon-3">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-
-    <!-- Features Section -->
+    </section>    <!-- Features Section -->
     <section class="app-features">
         <div class="container">
             <div class="section-header">
