@@ -63,7 +63,7 @@ if (!function_exists('component_header')) {
                                     </button>
                                     <div class="user-dropdown" id="userDropdown">
                                         <a href="perfil.php"><i class="fas fa-user"></i> Meu Perfil</a>
-                                        <a href="inicial.php"><i class="fas fa-gamepad"></i> Jogos</a>
+                                        <a href="jogo.php"><i class="fas fa-gamepad"></i> Jogos</a>
                                         <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
                                     </div>
                                 </div>
