@@ -47,7 +47,7 @@ if ($isVercel) {
     define('DB_PORT', '3306');
     define('DB_NAME', 'positivesense');
     define('DB_USER', 'root');
-    define('DB_PASS', ''); // Altere se tiver senha no MySQL
+    define('DB_PASS', getenv('DB_PASS') ?: ($_ENV['DB_PASS'] ?? '')); // Altere se tiver senha no MySQL
     define('DB_CHARSET', 'utf8mb4');
     define('DB_ENV', 'LOCAL-XAMPP');
     define('USE_SSL', false);
