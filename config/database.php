@@ -55,11 +55,11 @@ if ($isVercel) {
     // ========================================
     // AMBIENTE PRODUÇÃO (INFINITYFREE)
     // ========================================
-    define('DB_HOST', 'sql309.infinityfree.com');
+    define('DB_HOST', getenv('DB_HOST') ?: ($_ENV['DB_HOST'] ?? ''));
     define('DB_PORT', '3306');
-    define('DB_NAME', 'if0_40192662_positivesense');
-    define('DB_USER', 'if0_40192662');
-    define('DB_PASS', '0k9Y00tDgU');
+    define('DB_NAME', getenv('DB_NAME') ?: ($_ENV['DB_NAME'] ?? ''));
+    define('DB_USER', getenv('DB_USER') ?: ($_ENV['DB_USER'] ?? ''));
+    define('DB_PASS', getenv('DB_PASS') ?: ($_ENV['DB_PASS'] ?? ''));
     define('DB_CHARSET', 'utf8mb4');
     define('DB_ENV', 'PRODUCTION-INFINITYFREE');
     define('USE_SSL', false);
