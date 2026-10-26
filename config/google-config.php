@@ -14,8 +14,8 @@
  * 6. Copie Client ID e Client Secret aqui
  */
 
-define('GOOGLE_CLIENT_ID', 'YOUR_CLIENT_ID.apps.googleusercontent.com');
-define('GOOGLE_CLIENT_SECRET', 'YOUR_CLIENT_SECRET');
+define('GOOGLE_CLIENT_ID', getenv('GOOGLE_CLIENT_ID') ?: ($_ENV['GOOGLE_CLIENT_ID'] ?? ''));
+define('GOOGLE_CLIENT_SECRET', getenv('GOOGLE_CLIENT_SECRET') ?: ($_ENV['GOOGLE_CLIENT_SECRET'] ?? ''));
 define('GOOGLE_REDIRECT_URI', 'http://localhost:8000/tcc/login_google_callback.php');
 
 // Ou leia de variáveis de ambiente (mais seguro em produção)
