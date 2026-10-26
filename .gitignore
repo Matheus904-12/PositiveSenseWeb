@@ -34,3 +34,8 @@ vendor/
 # Cache
 cache/
 *.cache
+
+# Variáveis de ambiente locais; manter apenas exemplos versionados
+.env.*
+!.env.example
+!.env.*.example
