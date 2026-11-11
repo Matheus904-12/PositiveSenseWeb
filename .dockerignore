@@ -1,0 +1,7 @@
+.git
+.history
+node_modules
+vendor
+*.log
+.env*
+!.env.example
